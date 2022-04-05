@@ -1,61 +1,43 @@
-function add(x, y){
-    return x + y;
+function add(x, y){ return x + y };
+
+function substract(x, y){ return x - y };
+
+function multiply(x, y){ return x * y };
+
+function divide(x, y){ return x / y };
+
+function power(x, y){ return Math.pow(x, y) };
+
+function fraction(x){ return 1 / x };
+
+function square(x){ return Math.sqrt(x) };
+
+function squareMax(x, y){ return Math.pow(x, 1/y) };
+
+function factorial(x, result = 1, cont = x){ 
+  if (x === 0){ return 1; };
+  for (let i = cont; i > 1 ; i--) {
+    result *= i-1
+  }
+  return result * x;
+};
+
+
+function operate(operator, a, b){
+  if (operator === add){ return add(a, b) };
+  if (operator === substract){ return substract(a, b) };
+  if (operator === multiply){ return multiply(a, b) };
+  if (operator === divide){ return divide(a, b) };
+  if (operator === power){ return power(a, b) };
+  if (operator === fraction){ return fraction(a) };
+  if (operator === square){ return square(a) };
+  if (operator === squareMax){ return squareMax(a, b) };
+  if (operator === factorial){ return factorial(a) };
 }
 
-console.log(add(5, 7)); // 12
-
-function substract(x, y){
-    return x - y;
-}
-
-console.log(substract(5, 7)); // -2
-
-function multiply(x, y){
-    return x * y;
-}
-
-console.log(multiply(5, 7)); // 35
-
-function divide(x, y){
-    return x / y;
-}
-
-console.log(divide(5, 7)); // 0.7142857142857143
-
-function power(x, y){
-    return Math.pow(x, y);
-}
-
-console.log(power(5, 7)); // 78125
-
-function factorial(x){
-    let result = 1;
-    let cont = x;
-    if (x === 0){
-        return 1;
-      }
-      for (let i = cont; i > 1 ; i--) {
-        result *= i-1
-      }
-      return result * x;
-}
-
-console.log(factorial(5)); // 120
-
-function fraction(x){
-    return 1 / x;
-}
-
-console.log(fraction(5)); // 0.2
-
-function square(x){
-    return Math. sqrt(x); // 2.23606797749979
-}
-
-console.log(square(5));
-
-function squareMax(x, y){
-    return Math.pow(x, 1/y)
-}
-
-console.log(squareMax(5, 3)); // 1.709975946676697
+console.log(operate(add, 3, 5));
+console.log(operate(multiply, 3, 5));
+console.log(operate(factorial, 3));
+console.log(operate(square, 4));
+console.log(operate(squareMax, 3, 5));
+console.log(operate(fraction, 3));
