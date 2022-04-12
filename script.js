@@ -35,9 +35,21 @@ function operate(operator, a, b){
   if (operator === factorial){ return factorial(a) };
 }
 
-console.log(operate(add, 3, 5));
-console.log(operate(multiply, 3, 5));
-console.log(operate(factorial, 3));
-console.log(operate(square, 4));
-console.log(operate(squareMax, 3, 5));
-console.log(operate(fraction, 3));
+// console.log(operate(add, 3, 5));
+// console.log(operate(multiply, 3, 5));
+// console.log(operate(factorial, 3));
+// console.log(operate(square, 4));
+// console.log(operate(squareMax, 3, 5));
+// console.log(operate(fraction, 3));
+
+
+const buttons = document.querySelectorAll('button');
+const numInput = document.querySelector('.numinput');
+
+let result = '';
+for (let i = 0; i < buttons.length; i++) {
+  buttons[i].addEventListener('click', () => {
+    result += buttons[i].id
+    numInput.textContent = result;
+  });
+};
