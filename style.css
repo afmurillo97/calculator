@@ -71,6 +71,17 @@ div.calculator div.numinput:after{
     background:-webkit-linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.1));
     border-radius:60px;
 }
+div.calculator div.result{
+    display: flex;
+    font-family:'Hubballi', cursive;
+    padding-left: 205px;
+    font-size: 28pt;
+    margin-bottom: -25px;padding-left: 205px;
+    font-size: 28pt;
+    margin-bottom: -40px;
+    line-height:43px;
+    position:absolute;
+}
 div.calculator div.buttongrid{
     display: grid;
     grid-template-columns: repeat(5, 1fr);
