@@ -72,15 +72,16 @@ div.calculator div.numinput:after{
     border-radius:60px;
 }
 div.calculator div.result{
-    display: flex;
+    display: block;
+    width:300px;
     font-family:'Hubballi', cursive;
-    padding-left: 205px;
-    font-size: 28pt;
-    margin-bottom: -25px;padding-left: 205px;
-    font-size: 28pt;
-    margin-bottom: -40px;
+    font-size: 30pt;
+    margin-bottom: -25px;
     line-height:43px;
+    margin-top: -15px;
+    padding-left: 50px;
     position:absolute;
+    text-align:right;
 }
 div.calculator div.buttongrid{
     display: grid;
