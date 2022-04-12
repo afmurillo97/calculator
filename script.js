@@ -46,10 +46,42 @@ function operate(operator, a, b){
 const buttons = document.querySelectorAll('button');
 const numInput = document.querySelector('.numinput');
 
-let result = '';
-for (let i = 0; i < buttons.length; i++) {
-  buttons[i].addEventListener('click', () => {
-    result += buttons[i].id
-    numInput.textContent = result;
-  });
+let operation = '';
+
+for (let i = 0; i < buttons.length; i++){
+  if (4 < i < 8 && 9 < i < 13 && 14 < i < 17 && 19 < i < 22) {
+    buttons[i].addEventListener('click', () => {
+      operation += buttons[i].id;
+      numInput.textContent = operation;
+    });
+  };
 };
+
+
+
+
+/* 0: button#factorial
+1: button#square
+2: button#squareMax
+3: button#fraction
+4: button#power
+5: button#7
+6: button#8
+7: button#9
+8: button#delete
+9: button#ac
+10: button#4
+11: button#5
+12: button#6
+13: button#+
+14: button#-
+15: button#1
+16: button#2
+17: button#3
+18: button#x
+19: button#/
+20: button#plus-minus
+21: button#0
+22: button#decimal
+23: button#enter
+length: 24 */
