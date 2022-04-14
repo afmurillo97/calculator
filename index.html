@@ -24,26 +24,26 @@
             <button id="squareMax" ><sup>y</sup>&radic;x</button>
             <button id="fraction" >1/x</button>
             <button id="power" >X<sup>y</sup></button>
-            <button id="7" >7</button>
-            <button id="8" >8</button>
-            <button id="9" >9</button>
-            <button id="delete" ><i class="bi bi-backspace"></i></button>
-            <button id="ac" >AC</button>
-            <button id="4" >4</button>
-            <button id="5" >5</button>
-            <button id="6" >6</button>
-            <button id="+" ><i class="bi bi-plus"></i></button>
-            <button id="-" ><i class="bi bi-dash"></i></button>         
-            <button id="1" >1</button>
-            <button id="2" >2</button>
-            <button id="3" >3</button>
-            <button id="x" ><i class="bi bi-x"></i></button>
-            <button id="/" >÷</button>
+            <button id="7" onclick="getNum(this)">7</button>
+            <button id="8" onclick="getNum(this)">8</button>
+            <button id="9" onclick="getNum(this)">9</button>
+            <button id="delete" onclick="deleteLast()"><i class="bi bi-backspace"></i></button>
+            <button id="ac" onclick="deleteAll()">AC</button>
+            <button id="4" onclick="getNum(this)">4</button>
+            <button id="5" onclick="getNum(this)">5</button>
+            <button id="6" onclick="getNum(this)">6</button>
+            <button id="+" onclick="getOp(this)"><i class="bi bi-plus"></i></button>
+            <button id="-" onclick="getOp(this)"><i class="bi bi-dash"></i></button>         
+            <button id="1" onclick="getNum(this)">1</button>
+            <button id="2" onclick="getNum(this)">2</button>
+            <button id="3"onclick="getNum(this)" >3</button>
+            <button id="x" onclick="getOp(this)"><i class="bi bi-x"></i></button>
+            <button id="/" onclick="getOp(this)">÷</button>
             <button id="plus-minus" ><i class="bi bi-plus-slash-minus"></i></button>
-            <button id="0" >0</button>
+            <button id="0" onclick="getNum(this)">0</button>
             <button id="decimal" >.</button>
 		</div>
-        <button id="enter">=</button>
+        <button id="enter" onclick="getResult()">=</button>
 	</div>
 </body>
 </html>
