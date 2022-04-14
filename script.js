@@ -1,3 +1,4 @@
+//  All the operations are here
 function add(x, y){ return x + y };
 
 function substract(x, y){ return x - y };
@@ -22,12 +23,12 @@ function factorial(x, result = 1, cont = x){
   return result * x;
 };
 
-
+// the operate function takes an operator and one or two numbers
 function operate(operator, a, b){
-  if (operator === add){ return add(a, b) };
-  if (operator === substract){ return substract(a, b) };
-  if (operator === multiply){ return multiply(a, b) };
-  if (operator === divide){ return divide(a, b) };
+  if (operator === '+'){ return add(a, b) };
+  if (operator === '-'){ return substract(a, b) };
+  if (operator === 'x'){ return multiply(a, b) };
+  if (operator === '/'){ return divide(a, b) };
   if (operator === power){ return power(a, b) };
   if (operator === fraction){ return fraction(a) };
   if (operator === square){ return square(a) };
@@ -43,45 +44,54 @@ function operate(operator, a, b){
 // console.log(operate(fraction, 3));
 
 
-const buttons = document.querySelectorAll('button');
+
 const numInput = document.querySelector('.numinput');
+const resultInput = document.querySelector('.result');
 
 let operation = '';
 
-for (let i = 0; i < buttons.length; i++){
-  if (4 < i < 8 && 9 < i < 13 && 14 < i < 17 && 19 < i < 22) {
-    buttons[i].addEventListener('click', () => {
-      operation += buttons[i].id;
-      numInput.textContent = operation;
-    });
-  };
+// getNum takes the numbers between 0 and 9
+function getNum(number){
+  operation += number.id
+  return numInput.textContent = operation;
 };
 
+let state = false;
+
+// getOp takes an operator from the user
+function getOp(op){
+  if (state === false){
+    state = true
+    operation += op.id;
+    return numInput.textContent = operation;
+  }
+}
 
 
+function getResult(){
+  let operand = operation.search(/\D/);
+  if (operand !== -1 ){
+    let a = parseInt(operation.substring(0, operand))
+    let b = parseInt(operation.substring(operand + 1))
+    let operator = operation.substring(operand, operand + 1);
+    return resultInput.textContent = operate(operator, a, b);
+  } else {
+    return resultInput.textContent = operation;
+  }
+}
 
-/* 0: button#factorial
-1: button#square
-2: button#squareMax
-3: button#fraction
-4: button#power
-5: button#7
-6: button#8
-7: button#9
-8: button#delete
-9: button#ac
-10: button#4
-11: button#5
-12: button#6
-13: button#+
-14: button#-
-15: button#1
-16: button#2
-17: button#3
-18: button#x
-19: button#/
-20: button#plus-minus
-21: button#0
-22: button#decimal
-23: button#enter
-length: 24 */
+function deleteAll(){
+  state = false;
+  operation = ''
+  numInput.textContent = operation;
+  resultInput.textContent = '0';
+}
+
+function deleteLast(){
+  operation = operation.slice(0, operation.length - 1)
+  if (operation.search(/\D/) == -1){
+    state = false;
+  }
+  numInput.textContent = operation;
+  resultInput.textContent = '0';
+}
