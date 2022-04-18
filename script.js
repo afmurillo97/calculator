@@ -52,6 +52,13 @@ let operation = '';
 
 // getNum takes the numbers between 0 and 9
 function getNum(number){
+  if (enter){
+    enter = false;
+    state = false;
+    operation = ''
+    resultInput.textContent = '0';
+    numInput.textContent = operation;
+  }
   operation += number.id
   return numInput.textContent = operation;
 };
@@ -67,15 +74,17 @@ function getOp(op){
   }
 }
 
-
+let enter = false;
 function getResult(){
   let operand = operation.search(/\D/);
   if (operand !== -1 ){
     let a = parseInt(operation.substring(0, operand))
     let b = parseInt(operation.substring(operand + 1))
     let operator = operation.substring(operand, operand + 1);
+    enter = true;
     return resultInput.textContent = operate(operator, a, b);
   } else {
+    enter = true;
     return resultInput.textContent = operation;
   }
 }
