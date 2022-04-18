@@ -55,9 +55,15 @@ function getNum(number){
   if (enter){
     enter = false;
     state = false;
-    operation = ''
-    resultInput.textContent = '0';
-    numInput.textContent = operation;
+    if(statePlusMinus){
+      operation = '-'
+      numInput.textContent = operation;
+      resultInput.textContent = '0';
+    } else {
+      operation = ''
+      numInput.textContent = operation;
+      resultInput.textContent = '0';
+    }
   }
   operation += number.id
   return numInput.textContent = operation;
@@ -67,7 +73,7 @@ let state = false;
 
 // getOp takes an operator from the user
 function getOp(op){
-  if (state === false){
+  if (!state){
     state = true
     operation += op.id;
     return numInput.textContent = operation;
@@ -77,13 +83,27 @@ function getOp(op){
 let enter = false;
 function getResult(){
   let operand = operation.search(/\D/);
-  if (operand !== -1 ){
+  if (operand > 0){
     let a = parseInt(operation.substring(0, operand))
     let b = parseInt(operation.substring(operand + 1))
     let operator = operation.substring(operand, operand + 1);
     enter = true;
     return resultInput.textContent = operate(operator, a, b);
-  } else {
+  } else if (operand === 0){
+    let test = operation.slice(1)
+    operand = test.search(/\D/);
+    if (operand !== -1){
+      let a = -parseInt(test.substring(0, operand))
+      let b = parseInt(test.substring(operand + 1))
+      let operator = test.substring(operand, operand + 1);
+      enter = true;
+      return resultInput.textContent = operate(operator, a, b);
+    } else{
+      enter = true;
+      return resultInput.textContent = operation;
+    }
+  }
+  else {
     enter = true;
     return resultInput.textContent = operation;
   }
@@ -103,4 +123,12 @@ function deleteLast(){
   }
   numInput.textContent = operation;
   resultInput.textContent = '0';
+}
+
+let statePlusMinus = false;
+function plusMinus(){
+  if (operation === ''){
+    statePlusMinus = true;
+    numInput.textContent = '-'
+  }
 }
