@@ -36,19 +36,21 @@ function operate(operator, a, b){
   if (operator === factorial){ return factorial(a) };
 }
 
-// console.log(operate(add, 3, 5));
-// console.log(operate(multiply, 3, 5));
-// console.log(operate(factorial, 3));
-// console.log(operate(square, 4));
-// console.log(operate(squareMax, 3, 5));
-// console.log(operate(fraction, 3));
-
-
-
+// attemp to the buttons
 const numInput = document.querySelector('.numinput');
 const resultInput = document.querySelector('.result');
 
+// inialize all the variables
 let operation = '';
+
+let enter = false;
+
+let state = false;
+
+let statePlusMinus = false;
+
+let cont = false;
+
 
 // getNum takes the numbers between 0 and 9
 function getNum(number){
@@ -57,10 +59,9 @@ function getNum(number){
     state = false;
     if(statePlusMinus){
       operation = '-'
-      numInput.textContent = operation;
+      numInput.textContent += operation;
       resultInput.textContent = '0';
     } else {
-      operation = ''
       numInput.textContent = operation;
       resultInput.textContent = '0';
     }
@@ -69,7 +70,7 @@ function getNum(number){
   return numInput.textContent = operation;
 };
 
-let state = false;
+
 
 // getOp takes an operator from the user
 function getOp(op){
@@ -80,7 +81,6 @@ function getOp(op){
   }
 }
 
-let enter = false;
 function getResult(){
   let operand = operation.search(/\D/);
   if (operand > 0){
@@ -125,10 +125,10 @@ function deleteLast(){
   resultInput.textContent = '0';
 }
 
-let statePlusMinus = false;
+
 function plusMinus(){
   if (operation === ''){
     statePlusMinus = true;
-    numInput.textContent = '-'
+    numInput.textContent += '-'
   }
 }
