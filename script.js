@@ -1,11 +1,11 @@
 //  All the operations are here
-function add(x, y){ return x + y };
+function add(x, y){ return (x + y) };
 
-function substract(x, y){ return x - y };
+function substract(x, y){ return (x - y) };
 
-function multiply(x, y){ return x * y };
+function multiply(x, y){ return (x * y) };
 
-function divide(x, y){ return x / y };
+function divide(x, y){ return (x / y)  };
 
 function power(x, y){ return Math.pow(x, y) };
 
@@ -47,6 +47,8 @@ let enter = false;
 
 let state = false;
 
+let statePoint = false;
+
 let statePlusMinus = false;
 
 let cont = false;
@@ -83,14 +85,15 @@ function getNum(number){
 // getOp takes an operator from the user
 function getOp(op){
   if (!state){
-    state = true
+    statePoint = false;
+    state = true;
     operation += op.id;
     return numInput.textContent = operation;
   }
 }
 
 function getResult(){
-  let operands = operation.match(/\D/g);
+  let operands = operation.match(/([+]|[-]|[x]|[/])/g);
   let position = 0;
   let a = 0;
   let b = 0;
@@ -99,25 +102,26 @@ function getResult(){
   if (operands === null){ return resultInput.textContent = '0'}
   // positive calculations
   if (operands.length === 1){
-    position = operation.search(/\D/g)
+    position = operation.search(/([+]|[-]|[x]|[/])/g)
     operand = operands[0];
-    a = parseInt(operation.substring(0, position))
-    b = parseInt(operation.substring(position + 1))
+    a = parseFloat(operation.substring(0, position))
+    b = parseFloat(operation.substring(position + 1))
     return resultInput.textContent = operate(operand, a, b);
 
     // negative calculations
   } else if (operands.length === 2){
     let operationPlus = operation.substring(1);
-    position = operationPlus.search(/\D/g)
+    position = operationPlus.search(/([+]|[-]|[x]|[/])/g)
     operand = operands[1];
-    a = parseInt(operationPlus.substring(0, position))
-    b = parseInt(operationPlus.substring(position + 1))
+    a = parseFloat(operationPlus.substring(0, position))
+    b = parseFloat(operationPlus.substring(position + 1))
     return resultInput.textContent = operate(operand, -a, b);
   }
 };
 
 function deleteAll(){
   state = false;
+  statePoint = false;
   operation = ''
   numInput.textContent = operation;
   resultInput.textContent = '0';
@@ -125,8 +129,9 @@ function deleteAll(){
 
 function deleteLast(){
   operation = operation.slice(0, operation.length - 1)
-  if (operation.search(/\D/) == -1){
+  if (operation.search(/([+]|[-]|[x]|[/])/g) == -1){
     state = false;
+    statePoint = false;
   }
   numInput.textContent = operation;
   resultInput.textContent = '0';
@@ -137,5 +142,13 @@ function plusMinus(){
   if (operation === ''){
     statePlusMinus = true;
     numInput.textContent = '-'
+  }
+}
+
+function getPoint(point){
+  if (!statePoint){
+    statePoint = true
+    operation += point.id;
+    return numInput.textContent = operation;
   }
 }
