@@ -52,7 +52,7 @@ let statePlusMinus = false;
 let cont = false;
 
 
-// getNum takes the numbers between 0 and 9
+// getNum takes the numbers between 0 and 9 and negatives 
 function getNum(number){
   if (enter){
     enter = false;
@@ -65,9 +65,17 @@ function getNum(number){
       numInput.textContent = operation;
       resultInput.textContent = '0';
     }
-  }
-  operation += number.id
-  return numInput.textContent = operation;
+  } else {
+    if  (statePlusMinus){
+      statePlusMinus = false;
+      operation += '-'
+      operation += number.id
+      numInput.textContent = operation;
+    } else {
+      operation += number.id
+      numInput.textContent = operation
+    };
+  };
 };
 
 
@@ -82,32 +90,31 @@ function getOp(op){
 }
 
 function getResult(){
-  let operand = operation.search(/\D/);
-  if (operand > 0){
-    let a = parseInt(operation.substring(0, operand))
-    let b = parseInt(operation.substring(operand + 1))
-    let operator = operation.substring(operand, operand + 1);
-    enter = true;
-    return resultInput.textContent = operate(operator, a, b);
-  } else if (operand === 0){
-    let test = operation.slice(1)
-    operand = test.search(/\D/);
-    if (operand !== -1){
-      let a = -parseInt(test.substring(0, operand))
-      let b = parseInt(test.substring(operand + 1))
-      let operator = test.substring(operand, operand + 1);
-      enter = true;
-      return resultInput.textContent = operate(operator, a, b);
-    } else{
-      enter = true;
-      return resultInput.textContent = operation;
-    }
+  let operands = operation.match(/\D/g);
+  let position = 0;
+  let a = 0;
+  let b = 0;
+  let operand = '';
+  let test = typeof operands;
+  if (operands === null){ return resultInput.textContent = '0'}
+  // positive calculations
+  if (operands.length === 1){
+    position = operation.search(/\D/g)
+    operand = operands[0];
+    a = parseInt(operation.substring(0, position))
+    b = parseInt(operation.substring(position + 1))
+    return resultInput.textContent = operate(operand, a, b);
+
+    // negative calculations
+  } else if (operands.length === 2){
+    let operationPlus = operation.substring(1);
+    position = operationPlus.search(/\D/g)
+    operand = operands[1];
+    a = parseInt(operationPlus.substring(0, position))
+    b = parseInt(operationPlus.substring(position + 1))
+    return resultInput.textContent = operate(operand, -a, b);
   }
-  else {
-    enter = true;
-    return resultInput.textContent = operation;
-  }
-}
+};
 
 function deleteAll(){
   state = false;
@@ -129,6 +136,6 @@ function deleteLast(){
 function plusMinus(){
   if (operation === ''){
     statePlusMinus = true;
-    numInput.textContent += '-'
+    numInput.textContent = '-'
   }
 }
