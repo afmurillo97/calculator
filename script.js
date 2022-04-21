@@ -45,20 +45,20 @@ let operation = '';
 
 let enter = false;
 
-let state = false;
+let stateOp = false;
 
 let statePoint = false;
 
 let statePlusMinus = false;
 
-let cont = false;
+let stateEnter = false;
 
 
 // getNum takes the numbers between 0 and 9 and negatives 
 function getNum(number){
   if (enter){
     enter = false;
-    state = false;
+    stateOp = false;
     if(statePlusMinus){
       operation = '-'
       numInput.textContent += operation;
@@ -84,44 +84,64 @@ function getNum(number){
 
 // getOp takes an operator from the user
 function getOp(op){
-  if (!state){
+  if (!stateOp){
     statePoint = false;
-    state = true;
-    operation += op.id;
+    stateOp = true;
+    if (stateEnter){
+      stateEnter = false;
+      operation = resultInput.textContent + op.id;
+    } else {
+      operation += op.id;
+    }
     return numInput.textContent = operation;
   }
 }
 
 function getResult(){
-  let operands = operation.match(/([+]|[-]|[x]|[/])/g);
-  let position = 0;
-  let a = 0;
-  let b = 0;
-  let operand = '';
-  let test = typeof operands;
-  if (operands === null){ return resultInput.textContent = '0'}
-  // positive calculations
-  if (operands.length === 1){
-    position = operation.search(/([+]|[-]|[x]|[/])/g)
-    operand = operands[0];
-    a = parseFloat(operation.substring(0, position))
-    b = parseFloat(operation.substring(position + 1))
-    return resultInput.textContent = operate(operand, a, b);
-
-    // negative calculations
-  } else if (operands.length === 2){
-    let operationPlus = operation.substring(1);
-    position = operationPlus.search(/([+]|[-]|[x]|[/])/g)
-    operand = operands[1];
-    a = parseFloat(operationPlus.substring(0, position))
-    b = parseFloat(operationPlus.substring(position + 1))
-    return resultInput.textContent = operate(operand, -a, b);
+  // whe the operation starts in 0
+  if (resultInput.textContent === '0' ){
+    let operands = operation.match(/([+]|[-]|[x]|[/])/g);
+    let operand = '';
+    if (operands === null){ return resultInput.textContent = operation }
+    if (operands.length === 1){
+      operand = operands[0]
+      let minus = operation.indexOf(operand);
+      if (minus === 0){ return resultInput.textContent = operation } 
+      else { operand = operands[0] } 
+    }
+    else if (operands.length > 1){ operand = operands[1] }
+    let positionOp = operation.indexOf(operand, 1);
+    let a = parseFloat(operation.substring(0, positionOp))
+    let b = parseFloat(operation.substring(positionOp + 1))
+    let result = operate(operand, a, b)
+    let test = 0;
+    stateOp = false;
+    stateEnter = true;
+    if (result.toString().length > 8){ return resultInput.textContent = Math.round(result * 100) / 100 }
+    else { return resultInput.textContent = result; }
+    // the others operations
+  } else if (resultInput.textContent !== '0' ){
+    let operands = operation.match(/([+]|[-]|[x]|[/])/g);
+    let operand = '';
+    if (operands === null){ return operation }
+    if (operands.length === 1){ operand = operands[0] }
+    else if (operands.length > 1){ operand = operands[1] }
+    let positionOp = operation.indexOf(operand, 1);
+    let a = parseFloat(operation.substring(0, positionOp))
+    let b = parseFloat(operation.substring(positionOp + 1))
+    let result = operate(operand, a, b)
+    stateOp = false;
+    stateEnter = true;
+    if (result.toString().length > 8){ return resultInput.textContent = Math.round(result * 100) / 100 }
+    else { return resultInput.textContent = result; }
   }
+
 };
 
 function deleteAll(){
-  state = false;
+  stateOp = false;
   statePoint = false;
+  stateEnter = false;
   operation = ''
   numInput.textContent = operation;
   resultInput.textContent = '0';
@@ -130,7 +150,7 @@ function deleteAll(){
 function deleteLast(){
   operation = operation.slice(0, operation.length - 1)
   if (operation.search(/([+]|[-]|[x]|[/])/g) == -1){
-    state = false;
+    stateOp = false;
     statePoint = false;
   }
   numInput.textContent = operation;
@@ -139,9 +159,14 @@ function deleteLast(){
 
 
 function plusMinus(){
-  if (operation === ''){
+  if (!statePlusMinus){
     statePlusMinus = true;
-    numInput.textContent = '-'
+    if (numInput.textContent == '58.20'){
+      numInput.textContent = '-'
+    } else {
+      numInput.textContent += '-'
+    }
+    
   }
 }
 
